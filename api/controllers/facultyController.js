@@ -6,8 +6,14 @@ const facultyDb = require("../Models/facultyModels");
 
 module.exports.getAllFaculty = function (req, res) {
     //filll
+    //check is user's role is dean then only
+    //outputs all the faculty
 };
 
 module.exports.assignFaculty = function (req, res) {
     //filll
+    //will receive faculty id and student id
+    //check that user's role is dean then only
+    //assin that student under faculty
+    //outputs ok message if no error
 };

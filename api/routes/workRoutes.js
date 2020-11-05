@@ -5,12 +5,12 @@ const router = express.Router();
 // like -  const {checkToken} = require("../controllers/UserController");
 
 const {
-    getWorksByStudentId,
+    getWorksByProjectId,
     addWork,
     getWorkById,
 } = require("../controllers/workController");
 
-router.get("/getWorksByStudentId", getWorksByStudentId);
+router.get("/getWorksByStudentId", getWorksByProjectId);
 router.post("/addWork", addWork);
 router.get("/getWorkById", getWorkById);
 
