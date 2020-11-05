@@ -4,6 +4,7 @@
 -- Server OS:                    Win64
 -- HeidiSQL Version:             9.5.0.5196
 -- --------------------------------------------------------
+use test;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
