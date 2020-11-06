@@ -1,12 +1,12 @@
 # projectAllocator<br />
 Backend {<br />
-  added all the neccessary files for this project<br />
+  *added all the neccessary files for this project<br />
   added tables also in the api/Models<br />
   basically added faculty, student , project and Work , the userModel is same as example from ck <br />
   check this : https://sequelize.org/master/manual/getting-started.html<br />
   check model associations also , i have also added associations in the models folder but i have not checked if it is correct, you can modify if you need<br />
   MAIN thing is making an suitable middleware() like - <br />
-        app.use(async (req, res, next) => {<br />
+        *app.use(async (req, res, next) => {<br />
           if (req.headers["x-access-token"]) {<br />
             const accessToken = req.headers["x-access-token"];<br />
             const { userId, exp } = await jwt.verify(accessToken, process.env.JWT_SECRET);<br />
