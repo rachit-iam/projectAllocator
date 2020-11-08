@@ -1,8 +1,15 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../Models");
-const Faculty = require("./facultyModels");
 
 const Student = sequelize.define("student", {
+    userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+    },
+    facultyId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+    },
     name: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -13,6 +20,5 @@ const Student = sequelize.define("student", {
     },
 });
 
-Faculty.hasMany(Student);
 
 module.exports = Student;
