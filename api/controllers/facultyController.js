@@ -2,18 +2,48 @@ const con = require("../config");
 const SQL = require("sql-template-strings");
 var Sequelize = require("sequelize");
 const facultyDb = require("../Models/facultyModels");
+const studentDb = require("../Models/studentModels");
 //may require more dbs
 
 module.exports.getAllFaculty = function (req, res) {
-    //filll
     //check is user's role is dean then only
-    //outputs all the faculty
+    facultyDb
+        .findAll({})
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message:
+                    err.message ||
+                    "Some error occurred while retrieving faculties.",
+            });
+        });
 };
 
 module.exports.assignFaculty = function (req, res) {
-    //filll
-    //will receive faculty id and student id
     //check that user's role is dean then only
-    //assin that student under faculty
-    //outputs ok message if no error
+    const { facultyId, studentId } = req.body;
+    console.log(req.body.studentId);
+    studentDb
+        .findOne({ where: { id: studentId } })
+        .then((data) => {
+            if (data.facultyId !== null) {
+                res.status(500).send({
+                    message: "Student has already a faculty.",
+                });
+            } else {
+                data.update({ facultyId: facultyId });
+                res.send({
+                    message: "Student assigned to Faculty",
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message:
+                    err.message ||
+                    "Some error occurred while retrieving faculties.",
+            });
+        });
 };
