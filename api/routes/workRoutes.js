@@ -10,7 +10,7 @@ const {
     getWorkById,
 } = require("../controllers/workController");
 
-router.get("/getWorksByStudentId", getWorksByProjectId);
+router.get("/getWorksByProjectId", getWorksByProjectId);
 router.post("/addWork", addWork);
 router.get("/getWorkById", getWorkById);
 
