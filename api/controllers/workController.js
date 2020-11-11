@@ -2,8 +2,9 @@ const con = require("../config");
 const SQL = require("sql-template-strings");
 var Sequelize = require("sequelize");
 const workDb = require("../Models/workModels");
+const studentDb = require("../Models/studentModels");
+const projectDb = require("../Models/projectModels");
 //may require more dbs
-
 
 module.exports.getWorksByProjectId = function (req, res) {
     //filll
@@ -31,8 +32,51 @@ module.exports.getWorksByProjectId = function (req, res) {
 
 module.exports.addWork = function (req, res) {
     //filll
-    //will recieve project_id 
+    //will recieve project_id
     //check user is student role and projectid and studentId(user is student checked already) is related
+    if (res.locals.role != "student") {
+        res.status(403).send({
+            message: "Require Admin Role!",
+        });
+    }
+    studentDb
+        .findOne({
+            attributes: ["id"],
+            where: {userId: res.locals.userid}
+        })
+        .then(student => {
+            if(!student){
+                res.status(403).send({
+                    message: "Student not admitted!",
+                });
+            }
+            projectDb
+                .findOne({
+                    attributes: ["studentId"],
+                    where: { id: req.body.projectId }
+                })
+                .then(project => {
+                    if(project.studentId != student.id){
+                        res.status(403).send({
+                            message: "Cannot add work",
+                        });
+                    }
+                })
+                .catch((err) => {
+                    res.status(500).send({
+                        message:
+                            err.message ||
+                            "Some error occurred while retrieving projects.",
+                    });
+                });
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message:
+                    err.message ||
+                    "Some error occurred while retrieving projects.",
+            });
+        });
     workDb
         .create({
             name: req.body.name,

@@ -8,6 +8,11 @@ module.exports.getAllStudents = function (req, res) {
     //filll
     //check is user's role is dean then only
     //outputs all students
+    if (res.locals.role !== "dean") {
+        res.status(403).send({
+            message: "Require Admin Role!",
+        });
+    }
     studentDb
         .findAll({})
         .then((data) => {

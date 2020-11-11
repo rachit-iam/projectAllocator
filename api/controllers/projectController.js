@@ -2,6 +2,8 @@ const con = require("../config");
 const SQL = require("sql-template-strings");
 var Sequelize = require("sequelize");
 const projectDb = require("../Models/projectModels");
+const studentDb = require("../Models/studentModels");
+const facultyDb = require("../Models/facultyModels")
 //may require more dbs
 
 module.exports.getProjectsByStudentId = function (req, res) {
@@ -28,8 +30,53 @@ module.exports.getProjectsByStudentId = function (req, res) {
 
 module.exports.addProject = function (req, res) {
     //filll
-    //will recieve student id and
+    //will recieve student id and facultyid
     //check if user is faculty and the student is under the user if he is faculty and syudent id is valid
+    if (res.locals.role !== "faculty") {
+        res.status(403).send({
+            message: "Require faculty Role!",
+        });
+    }
+    studentDb
+        .findOne({
+            attributes: ["facultyId"],
+            where: {studentId : req.body.studentId }
+        })
+        .then( data => {
+            if(data.facultyId != req.body.facultyId){
+                res.status(403).send({
+                    message: "Require Admin Role!",
+                });
+            } 
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message:
+                    err.message ||
+                    "Some error occurred while creating the project.",
+            });
+        });
+    
+    facultyDb
+        .findOne({
+            attributes: ["userId"],
+            where: {id: req.body.facultyId}
+        })
+        .then(data => {
+            if(data.userId !== res.locals.userid) {
+                res.status(403).send({
+                    message: "Require Admin Role!",
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message:
+                    err.message ||
+                    "Some error occurred while creating the project.",
+            });
+        });
+
     projectDb
         .create({
             name: req.body.name,

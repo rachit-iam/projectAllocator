@@ -7,6 +7,11 @@ const studentDb = require("../Models/studentModels");
 
 module.exports.getAllFaculty = function (req, res) {
     //check is user's role is dean then only
+    if (res.locals.role !== "dean") {
+        res.status(403).send({
+            message: "Require Admin Role!",
+        });
+    }
     facultyDb
         .findAll({})
         .then((data) => {
@@ -23,6 +28,11 @@ module.exports.getAllFaculty = function (req, res) {
 
 module.exports.assignFaculty = function (req, res) {
     //check that user's role is dean then only
+    if (res.locals.role !== "dean") {
+        res.status(403).send({
+            message: "Require Admin Role!",
+        });
+    }
     const { facultyId, studentId } = req.body;
     console.log(req.body.studentId);
     studentDb
