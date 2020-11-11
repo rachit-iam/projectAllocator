@@ -42,55 +42,57 @@ module.exports.addWork = function (req, res) {
     studentDb
         .findOne({
             attributes: ["id"],
-            where: {userId: res.locals.userid}
+            where: { userId: res.locals.userId },
         })
-        .then(student => {
-            if(!student){
+        .then((student) => {
+            if (!student) {
                 res.status(403).send({
                     message: "Student not admitted!",
                 });
-            }
-            projectDb
-                .findOne({
-                    attributes: ["studentId"],
-                    where: { id: req.body.projectId }
-                })
-                .then(project => {
-                    if(project.studentId != student.id){
-                        res.status(403).send({
-                            message: "Cannot add work",
+            } else {
+                projectDb
+                    .findOne({
+                        attributes: ["studentId"],
+                        where: { id: req.body.projectId },
+                    })
+                    .then((project) => {
+                        if (project.studentId != student.id) {
+                            res.status(403).send({
+                                message: "Cannot add work to others project",
+                            });
+                        } else {
+                            workDb
+                                .create({
+                                    name: req.body.name,
+                                    description: req.body.description,
+                                    projectId: req.body.projectId,
+                                })
+                                .then((data) => {
+                                    res.send(data);
+                                })
+                                .catch((err) => {
+                                    res.status(500).send({
+                                        message:
+                                            err.message ||
+                                            "Some error occurred while creating the project.",
+                                    });
+                                });
+                        }
+                    })
+                    .catch((err) => {
+                        res.status(500).send({
+                            message:
+                                err.message ||
+                                "Some error occurred while retrieving projects.",
                         });
-                    }
-                })
-                .catch((err) => {
-                    res.status(500).send({
-                        message:
-                            err.message ||
-                            "Some error occurred while retrieving projects.",
                     });
-                });
+            }
         })
         .catch((err) => {
             res.status(500).send({
                 message:
                     err.message ||
                     "Some error occurred while retrieving projects.",
-            });
-        });
-    workDb
-        .create({
-            name: req.body.name,
-            description: req.body.description,
-            projectId: req.body.projectId,
-        })
-        .then((data) => {
-            res.send(data);
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message:
-                    err.message ||
-                    "Some error occurred while creating the project.",
             });
         });
 };

@@ -3,14 +3,14 @@ const SQL = require("sql-template-strings");
 var Sequelize = require("sequelize");
 const projectDb = require("../Models/projectModels");
 const studentDb = require("../Models/studentModels");
-const facultyDb = require("../Models/facultyModels")
+const facultyDb = require("../Models/facultyModels");
 //may require more dbs
 
 module.exports.getProjectsByStudentId = function (req, res) {
     //filll
     //all can access at this time
     //get student id
-    //outputs all the projects under that student 
+    //outputs all the projects under that student
     projectDb
         .findAll({
             attributes: ["id", "name"],
@@ -40,51 +40,51 @@ module.exports.addProject = function (req, res) {
     studentDb
         .findOne({
             attributes: ["facultyId"],
-            where: {studentId : req.body.studentId }
-        })
-        .then( data => {
-            if(data.facultyId != req.body.facultyId){
-                res.status(403).send({
-                    message: "Require Admin Role!",
-                });
-            } 
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message:
-                    err.message ||
-                    "Some error occurred while creating the project.",
-            });
-        });
-    
-    facultyDb
-        .findOne({
-            attributes: ["userId"],
-            where: {id: req.body.facultyId}
-        })
-        .then(data => {
-            if(data.userId !== res.locals.userid) {
-                res.status(403).send({
-                    message: "Require Admin Role!",
-                });
-            }
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message:
-                    err.message ||
-                    "Some error occurred while creating the project.",
-            });
-        });
-
-    projectDb
-        .create({
-            name: req.body.name,
-            description: req.body.description,
-            studentId: req.body.studentId,
+            where: { id: req.body.studentId },
         })
         .then((data) => {
-            res.send(data);
+            if (data.facultyId != req.body.facultyId) {
+                res.status(403).send({
+                    message: "student is not under you!",
+                });
+            } else {
+                facultyDb
+                    .findOne({
+                        attributes: ["userId"],
+                        where: { id: req.body.facultyId },
+                    })
+                    .then((data) => {
+                        if (data.userId !== res.locals.userId) {
+                            res.status(403).send({
+                                message: "dont send request for other people!",
+                            });
+                        } else {
+                            projectDb
+                                .create({
+                                    name: req.body.name,
+                                    description: req.body.description,
+                                    studentId: req.body.studentId,
+                                })
+                                .then((data) => {
+                                    res.send(data);
+                                })
+                                .catch((err) => {
+                                    res.status(500).send({
+                                        message:
+                                            err.message ||
+                                            "Some error occurred while creating the project.",
+                                    });
+                                });
+                        }
+                    })
+                    .catch((err) => {
+                        res.status(500).send({
+                            message:
+                                err.message ||
+                                "Some error occurred while creating the project.",
+                        });
+                    });
+            }
         })
         .catch((err) => {
             res.status(500).send({
