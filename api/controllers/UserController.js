@@ -55,13 +55,17 @@ module.exports.login = function (req, res) {
                     message: "Invalid Password!",
                 });
             }
-            var token = jwt.sign({ id: user.id }, process.env.JWT_SECRET , {
-                expiresIn: 86400, // 24 hours
-            });
+            var token = jwt.sign(
+                { id: user.id, role: user.role },
+                process.env.JWT_SECRET,
+                {
+                    expiresIn: 86400, // 24 hours
+                }
+            );
             res.status(200).send({
                 id: user.id,
                 username: user.username,
-                roles: user.role,
+                role: user.role,
                 accessToken: token,
             });
         })
@@ -72,3 +76,37 @@ module.exports.login = function (req, res) {
         });
 };
 
+function getTokenFromHeader(req) {
+    if (
+        (req.headers.authorization &&
+            req.headers.authorization.split(" ")[0] === "Token") ||
+        (req.headers.authorization &&
+            req.headers.authorization.split(" ")[0] === "Bearer")
+    ) {
+        return req.headers.authorization.split(" ")[1];
+    }
+
+    return null;
+}
+
+module.exports.verifyToken = (req, res, next) => {
+    let token = getTokenFromHeader(req);
+
+    if (!token) {
+        return res.status(403).send({
+            message: "No token provided!",
+        });
+    }
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            return res.status(401).send({
+                message: "Unauthorized!",
+            });
+        }
+        res.locals.userId = decoded.id;
+        res.locals.role = decoded.role;
+        console.log(res.locals);
+        next();
+    });
+};
