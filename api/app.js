@@ -33,8 +33,10 @@ app.use("/api", projectRoutes);
 app.use("/api", studentRoutes);
 app.use("/api", workRoutes);
 app.use("/api", userRoutes);
-app.use("", (req, res) => {
-    res.send({ message: "hello world" });
+app.get("",  (req, res) => {
+    res.send({ 
+        message: "incorrect route" 
+    });
 });
 
 const port = process.env.PORT || 8000;
