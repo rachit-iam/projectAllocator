@@ -48,26 +48,26 @@ module.exports.login = function (req, res) {
         .then((user) => {
             if (!user) {
                 return res.status(404).send({ message: "User Not found." });
-            }
-            if (user.password !== req.body.password) {
+            } else if (user.password !== req.body.password) {
                 return res.status(401).send({
                     accessToken: null,
                     message: "Invalid Password!",
                 });
+            } else {
+                var token = jwt.sign(
+                    { id: user.id, role: user.role },
+                    process.env.JWT_SECRET,
+                    {
+                        expiresIn: 86400, // 24 hours
+                    }
+                );
+                res.status(200).send({
+                    id: user.id,
+                    username: user.username,
+                    role: user.role,
+                    accessToken: token,
+                });
             }
-            var token = jwt.sign(
-                { id: user.id, role: user.role },
-                process.env.JWT_SECRET,
-                {
-                    expiresIn: 86400, // 24 hours
-                }
-            );
-            res.status(200).send({
-                id: user.id,
-                username: user.username,
-                role: user.role,
-                accessToken: token,
-            });
         })
         .catch((err) => {
             res.status(500).send({

@@ -33,9 +33,9 @@ app.use("/api", projectRoutes);
 app.use("/api", studentRoutes);
 app.use("/api", workRoutes);
 app.use("/api", userRoutes);
-app.get("",  (req, res) => {
-    res.send({ 
-        message: "incorrect route" 
+app.get("", (req, res) => {
+    res.send({
+        message: "incorrect route",
     });
 });
 
