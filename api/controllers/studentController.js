@@ -11,9 +11,18 @@ module.exports.getAllStudents = function (req, res) {
     //check is user's role is dean then only
     //outputs all students
     if (res.locals.role === "dean") {
-        res.status(403).send({
-            message: "Require Admin Role!",
-        });
+        studentDb
+            .findAll({})
+            .then((data) => {
+                res.send(data);
+            })
+            .catch((err) => {
+                res.status(500).send({
+                    message:
+                        err.message ||
+                        "Some error occurred while retrieving faculties.",
+                });
+            });
     } else if (res.locals.role === "faculty") {
         FacultyDb.findOne({
             attributes: ["id"],

@@ -11,7 +11,7 @@ const {
 } = require("../controllers/facultyController");
 
 router.get("/getAllFaculty", verifyToken, getAllFaculty);
-router.post("/assignFaculty", verifyToken, assignFaculty);
+router.post("/assignFaculty/:studentId", verifyToken, assignFaculty);
 
 //router.post("/fellowship/saveLeaveMaster",checkToken, saveLeaveMaster);
 

@@ -33,7 +33,9 @@ module.exports.assignFaculty = function (req, res) {
             message: "Require Admin Role!",
         });
     }
-    const { facultyId, studentId } = req.body;
+    const { facultyId } = req.body;
+    const studentId = req.params.studentId;
+    
     console.log(req.body.studentId);
     studentDb
         .findOne({ where: { id: studentId } })
