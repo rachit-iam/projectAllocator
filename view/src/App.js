@@ -7,6 +7,7 @@ import setAuthToken from "./setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authentication";
 import axios from 'axios';
 import Login from './components/Login';
+import Students from './components/Students';
 
 axios.defaults.baseURL = 'http://localhost:8000';
 if (localStorage.jwtToken) {
@@ -31,6 +32,7 @@ class App extends Component {
                         {/* <Route exact path="/" component={Home} /> */}
                         <div className="container">
                             <Route exact path="/login" component={Login} />
+                            <Route exact path="/students" component={Students} />
                         </div>
                     </div>
                 </Router>
