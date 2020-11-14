@@ -10,9 +10,9 @@ const {
     getProjectById,
 } = require("../controllers/projectController");
 
-router.get("/getProjectsByStudentId", verifyToken, getProjectsByStudentId);
-router.post("/addProject", verifyToken, addProject);
-router.get("/getProjectById", verifyToken, getProjectById);
+router.get("/getProjectsByStudentId/:studentId", verifyToken, getProjectsByStudentId);
+router.post("/addProject/:studentId", verifyToken, addProject);
+router.get("/getProjectById/:projectId", verifyToken, getProjectById);
 
 //router.post("/fellowship/saveLeaveMaster",checkToken, saveLeaveMaster);
 

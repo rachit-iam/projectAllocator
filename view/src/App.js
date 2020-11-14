@@ -5,11 +5,17 @@ import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authentication";
-import axios from 'axios';
-import Login from './components/Login';
-import Students from './components/Students';
+import axios from "axios";
+import Login from "./components/Login";
+import Students from "./components/Students";
+import Profile from "./components/Profile";
+import Project from './components/Project';
+import Work from "./components/work";
+import ProjectForm from "./components/ProjectForm";
+import WorkForm from "./components/WorkForm";
 
-axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = "http://localhost:8000";
+
 if (localStorage.jwtToken) {
     setAuthToken(localStorage.jwtToken);
     const decoded = jwt_decode(localStorage.jwtToken);
@@ -32,7 +38,36 @@ class App extends Component {
                         {/* <Route exact path="/" component={Home} /> */}
                         <div className="container">
                             <Route exact path="/login" component={Login} />
-                            <Route exact path="/students" component={Students} />
+                            <Route
+                                exact
+                                path="/students"
+                                component={Students}
+                            />
+                            <Route
+                                exact
+                                path="/students/:id"
+                                component={Profile}
+                            />
+                            <Route
+                                exact
+                                path="/projects/:id"
+                                component={Project}
+                            />
+                            <Route
+                                exact
+                                path="/works/:id"
+                                component={Work}
+                            />
+                            <Route
+                                exact
+                                path="/projects/:studentId/add"
+                                component={ProjectForm}
+                            />
+                            <Route
+                                exact
+                                path="/works/:projectId/add"
+                                component={WorkForm}
+                            />
                         </div>
                     </div>
                 </Router>

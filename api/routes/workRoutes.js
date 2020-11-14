@@ -11,9 +11,9 @@ const {
     getWorkById,
 } = require("../controllers/workController");
 
-router.get("/getWorksByProjectId", verifyToken, getWorksByProjectId);
-router.post("/addWork", verifyToken, addWork);
-router.get("/getWorkById", verifyToken, getWorkById);
+router.get("/getWorksByProjectId/:projectId", verifyToken, getWorksByProjectId);
+router.post("/addWork/:projectId", verifyToken, addWork);
+router.get("/getWorkById/:workId", verifyToken, getWorkById);
 
 //router.post("/fellowship/saveLeaveMaster",checkToken, saveLeaveMaster);
 

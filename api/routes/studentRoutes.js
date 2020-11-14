@@ -13,7 +13,7 @@ const {
 
 router.get("/getAllStudents", verifyToken, getAllStudents);
 router.get("/getStudentsByFacultyById", verifyToken, getStudentsByFacultyById);
-router.get("/getStudentDetails", verifyToken, getStudentDetails);
+router.get("/getStudentDetails/:studentId", verifyToken, getStudentDetails);
 
 //router.post("/fellowship/saveLeaveMaster",checkToken, saveLeaveMaster);
 

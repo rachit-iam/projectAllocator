@@ -16,7 +16,7 @@ module.exports.getWorksByProjectId = function (req, res) {
     workDb
         .findAll({
             attributes: ["id", "name"],
-            where: { projectId: req.body.projectId },
+            where: { projectId: req.params.projectId },
         })
         .then((data) => {
             res.send(data);
@@ -36,7 +36,7 @@ module.exports.addWork = function (req, res) {
     //check user is student role and projectid and studentId(user is student checked already) is related
     if (res.locals.role != "student") {
         res.status(403).send({
-            message: "Require Admin Role!",
+            message: "Require Student Role!",
         });
     }
     studentDb
@@ -53,10 +53,10 @@ module.exports.addWork = function (req, res) {
                 projectDb
                     .findOne({
                         attributes: ["studentId"],
-                        where: { id: req.body.projectId },
+                        where: { id: req.params.projectId },
                     })
                     .then((project) => {
-                        if (project.studentId != student.id) {
+                        if (project.studentId !== student.id) {
                             res.status(403).send({
                                 message: "Cannot add work to others project",
                             });
@@ -65,7 +65,7 @@ module.exports.addWork = function (req, res) {
                                 .create({
                                     name: req.body.name,
                                     description: req.body.description,
-                                    projectId: req.body.projectId,
+                                    projectId: req.params.projectId,
                                 })
                                 .then((data) => {
                                     res.send(data);
@@ -107,7 +107,7 @@ module.exports.getWorkById = function (req, res) {
     workDb
         .findOne({
             where: {
-                id: req.body.workId,
+                id: req.params.workId,
             },
         })
         .then((data) => {
