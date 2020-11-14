@@ -10,9 +10,12 @@ import Login from "./components/Login";
 import Students from "./components/Students";
 import Profile from "./components/Profile";
 import Project from './components/Project';
-import Work from "./components/work";
+import Work from "./components/Work";
 import ProjectForm from "./components/ProjectForm";
 import WorkForm from "./components/WorkForm";
+import AssignForm from "./components/AssignForm";
+import Home from "./components/Home";
+import Navbar from './components/Navbar';
 
 axios.defaults.baseURL = "http://localhost:8000";
 
@@ -34,10 +37,15 @@ class App extends Component {
             <Provider store={store}>
                 <Router>
                     <div>
-                        {/* //<Navbar /> */}
+                        <Navbar />
                         {/* <Route exact path="/" component={Home} /> */}
                         <div className="container">
                             <Route exact path="/login" component={Login} />
+                            <Route
+                                exact
+                                path="/home"
+                                component={Home}
+                            />
                             <Route
                                 exact
                                 path="/students"
@@ -67,6 +75,11 @@ class App extends Component {
                                 exact
                                 path="/works/:projectId/add"
                                 component={WorkForm}
+                            />
+                            <Route
+                                exact
+                                path="/assign/:studentId"
+                                component={AssignForm}
                             />
                         </div>
                     </div>

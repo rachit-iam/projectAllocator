@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 class Project extends Component {
     constructor() {
@@ -34,9 +36,13 @@ class Project extends Component {
     }
 
     render() {
+        const role = this.props.auth.user.role;
         const workList = this.state.works.map((d) => (
             <li key={d.id}>
-                <div>{d.name}</div>
+                <div>
+                    <Link to={`/works/${d.id}`}><h2>{d.name}</h2></Link>
+                    <hr />
+                </div>
             </li>
         ));
         const { name, description } = this.state.projectDetails;
@@ -44,10 +50,15 @@ class Project extends Component {
             <div>
                 <h1>{name}</h1>
                 <p>{description}</p>
-                <div>{workList}</div>
+                <h2>Work submitted to this project - </h2>
+                <ul>{workList}</ul>
             </div>
         );
     }
 }
 
-export default Project;
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Project);

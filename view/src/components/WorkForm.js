@@ -42,12 +42,12 @@ class WorkForm extends Component {
                 className="container"
                 style={{ marginTop: "50px", width: "700px" }}
             >
-                <h2 style={{ marginBottom: "40px" }}>Add project</h2>
+                <h2 style={{ marginBottom: "40px" }}>Add work</h2>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <input
                             type="string"
-                            placeholder="Project name"
+                            placeholder="Work name"
                             className={classnames(
                                 "form-control form-control-lg"
                             )}
@@ -59,7 +59,7 @@ class WorkForm extends Component {
                     <div className="form-group">
                         <input
                             type="string"
-                            placeholder="Project description"
+                            placeholder="Work description"
                             className={classnames(
                                 "form-control form-control-lg"
                             )}
@@ -70,7 +70,7 @@ class WorkForm extends Component {
                     </div>
                     <div className="form-group">
                         <button type="submit" className="btn btn-primary">
-                            Add project
+                            Add work
                         </button>
                     </div>
                 </form>

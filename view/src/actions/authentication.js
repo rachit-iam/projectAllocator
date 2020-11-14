@@ -21,6 +21,7 @@ export const loginUser = (user) => (dispatch) => {
         .then((res) => {
             const token = res.data.accessToken;
             localStorage.setItem("jwtToken", token);
+            if(res.data.role === "student") localStorage.setItem("studentId", res.data.studentId);
             setAuthToken(token);
             const decoded = jwt_decode(token);
             dispatch(setCurrentUser(decoded));
@@ -42,6 +43,7 @@ export const setCurrentUser = (decoded) => {
 
 export const logoutUser = (history) => (dispatch) => {
     localStorage.removeItem("jwtToken");
+    if(localStorage.studentId) localStorage.removeItem("studentId");
     setAuthToken(false);
     dispatch(setCurrentUser({}));
     history.push("/login");

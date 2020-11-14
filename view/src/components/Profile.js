@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Link } from 'react-router-dom';
+import { connect } from "react-redux";
 
 class Profile extends Component {
     constructor() {
@@ -35,16 +37,31 @@ class Profile extends Component {
 
     render() {
         const projectsList = this.state.projects.map((d) => (
-            <li key={d.id}>{d.name} </li>
+            <li key={d.id}>
+                <Link to={`/projects/${d.id}`}><h2>{d.name}</h2></Link>
+                { this.props.auth.user.role === "student" &&
+                    <Link to={`/works/${d.id}/add`}>Add your work</Link>
+                }
+                <hr/>
+            </li>
         ));
-        const { name } = this.state.studentDetails;
+        const { name, admissionNo } = this.state.studentDetails;
         return (
             <div>
                 <h1>{name}</h1>
-                <div>{projectsList}</div>
+                <h2>admissionNo = {admissionNo}</h2>
+                <p>
+                    <h2>Project List</h2>
+                    <ul>{projectsList}</ul>
+                </p>
             </div>
         );
     }
 }
 
-export default Profile;
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Profile);
+
