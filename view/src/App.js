@@ -1,53 +1,90 @@
 import React, { Component } from "react";
-import loadable from "@loadable/component";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-const Logout = loadable(() => import("./core/Logout"));
-const Layout = loadable(() => import("./core/Layout"));
-const FileNotFound = loadable(() => import("./core/FileNotFound"));
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store";
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./setAuthToken";
+import { setCurrentUser, logoutUser } from "./actions/authentication";
+import axios from "axios";
+import Login from "./components/Login";
+import Students from "./components/Students";
+import Profile from "./components/Profile";
+import Project from './components/Project';
+import Work from "./components/Work";
+import ProjectForm from "./components/ProjectForm";
+import WorkForm from "./components/WorkForm";
+import AssignForm from "./components/AssignForm";
+import Home from "./components/Home";
+import Navbar from './components/Navbar';
 
-const loading = (
-    <div class="d-flex justify-content-center">
-        <div class="spinner-border" role="status">
-            <span class="sr-only"> Please Wait, Loading... </span>{" "}
-        </div>{" "}
-    </div>
-);
-// Pages
-const Login = loadable(() => import("./core/Login"));
-class App extends Component {
-    constructor(props) {
-        super(props);
+axios.defaults.baseURL = "http://localhost:8000";
+
+if (localStorage.jwtToken) {
+    setAuthToken(localStorage.jwtToken);
+    const decoded = jwt_decode(localStorage.jwtToken);
+    store.dispatch(setCurrentUser(decoded));
+
+    const currentTime = Date.now() / 1000;
+    if (decoded.exp < currentTime) {
+        store.dispatch(logoutUser());
+        window.location.href = "/login";
     }
-    componentDidMount() {}
+}
 
+class App extends Component {
     render() {
         return (
-            <BrowserRouter>
-                <React.Suspense fallback={loading}>
-                    <Switch>
-                        <Route
-                            exact
-                            path="/Logout"
-                            name="Logout Page"
-                            render={(props) => <Logout {...props} />}
-                        />
-                        <Route
-                            exact
-                            path="/"
-                            name="Login Page"
-                            render={(props) => <Login {...props} />}
-                        />
-                        <Route
-                            path="/"
-                            name="Home"
-                            render={(props) => <Layout {...props} />}
-                        />
-                        <Route path="*">
-                            <FileNotFound />
-                        </Route>{" "}
-                    </Switch>{" "}
-                </React.Suspense>{" "}
-            </BrowserRouter>
+            <Provider store={store}>
+                <Router>
+                    <div>
+                        <Navbar />
+                        {/* <Route exact path="/" component={Home} /> */}
+                        <div className="container">
+                            <Route exact path="/login" component={Login} />
+                            <Route
+                                exact
+                                path="/home"
+                                component={Home}
+                            />
+                            <Route
+                                exact
+                                path="/students"
+                                component={Students}
+                            />
+                            <Route
+                                exact
+                                path="/students/:id"
+                                component={Profile}
+                            />
+                            <Route
+                                exact
+                                path="/projects/:id"
+                                component={Project}
+                            />
+                            <Route
+                                exact
+                                path="/works/:id"
+                                component={Work}
+                            />
+                            <Route
+                                exact
+                                path="/projects/:studentId/add"
+                                component={ProjectForm}
+                            />
+                            <Route
+                                exact
+                                path="/works/:projectId/add"
+                                component={WorkForm}
+                            />
+                            <Route
+                                exact
+                                path="/assign/:studentId"
+                                component={AssignForm}
+                            />
+                        </div>
+                    </div>
+                </Router>
+            </Provider>
         );
     }
 }

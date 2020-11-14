@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { verifyToken } = require("../controllers/UserController");
 
 // add some middleware also
 // like -  const {checkToken} = require("../controllers/UserController");
@@ -10,9 +11,9 @@ const {
     getStudentDetails,
 } = require("../controllers/studentController");
 
-router.get("/getAllStudents", getAllStudents);
-router.get("/getStudentsByFacultyById", getStudentsByFacultyById);
-router.get("/getStudentDetails", getStudentDetails);
+router.get("/getAllStudents", verifyToken, getAllStudents);
+router.get("/getStudentsByFacultyById", verifyToken, getStudentsByFacultyById);
+router.get("/getStudentDetails/:studentId", verifyToken, getStudentDetails);
 
 //router.post("/fellowship/saveLeaveMaster",checkToken, saveLeaveMaster);
 
