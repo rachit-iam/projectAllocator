@@ -61,12 +61,36 @@ module.exports.login = function (req, res) {
                         expiresIn: 86400, // 24 hours
                     }
                 );
-                res.status(200).send({
-                    id: user.id,
-                    username: user.username,
-                    role: user.role,
-                    accessToken: token,
-                });
+                if (user.role == "student") {
+                    studentDb
+                        .findOne({
+                            attributes: ["id"],
+                            where: { userId: user.id },
+                        })
+                        .then((student) => {
+                            res.status(200).send({
+                                id: user.id,
+                                username: user.username,
+                                role: user.role,
+                                accessToken: token,
+                                studentId: student.id,
+                            });
+                        })
+                        .catch((err) => {
+                            res.status(500).send({
+                                message:
+                                    err.message ||
+                                    "Some error occurred while login",
+                            });
+                        });
+                } else {
+                    res.status(200).send({
+                        id: user.id,
+                        username: user.username,
+                        role: user.role,
+                        accessToken: token,
+                    });
+                }
             }
         })
         .catch((err) => {
