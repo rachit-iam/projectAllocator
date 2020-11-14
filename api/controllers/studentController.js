@@ -2,6 +2,8 @@ const con = require("../config");
 const SQL = require("sql-template-strings");
 var Sequelize = require("sequelize");
 const studentDb = require("../Models/studentModels");
+
+const FacultyDb = require("../Models/facultyModels");
 //may require more dbs
 
 module.exports.getAllStudents = function (req, res) {
@@ -32,13 +34,27 @@ module.exports.getStudentsByFacultyById = function (req, res) {
     //check if the user's role is faculty
     //will recieve faculty id
     //outputs students under a faculty id
-    studentDb
-        .findAll({
-            attributes: ["id", "name", "admissionNo"],
-            where: { facultyId: req.body.facultyId },
-        })
-        .then((data) => {
-            res.send(data);
+
+    FacultyDb.findOne({
+        attributes: ["id"],
+        where: { userId: res.locals.userId },
+    })
+        .then((faculty) => {
+            studentDb
+                .findAll({
+                    attributes: ["id", "name", "admissionNo"],
+                    where: { facultyId: faculty.id },
+                })
+                .then((data) => {
+                    res.send(data);
+                })
+                .catch((err) => {
+                    res.status(500).send({
+                        message:
+                            err.message ||
+                            "Some error occurred while retrieving projects.",
+                    });
+                });
         })
         .catch((err) => {
             res.status(500).send({
