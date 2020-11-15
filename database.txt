@@ -1,0 +1,42 @@
+create a sqltest table
+change mysql credentials in api/models/index
+All  the tables will be created automatically when you use npm start on api folder due to sync command
+
+To create some users - 
+
+i have created an signup api for that, use that in api
+
+use POST localhost:8000/api/signup
+
+REQUEST BODY 
+
+
+FOR A DEAN
+{
+    "username": "rajeev",
+    "password": "rajeevpass",
+    "role" : "dean"
+
+}
+
+
+
+FOR A FACULTY 
+{
+    "username": "chiranjeev",
+    "password": "chiranjeevpass",
+    "role" : "faculty",
+    "name": "Chiranjeev kumar"
+}
+
+
+FOR A STUDENT
+
+{
+    "username": "rachit",
+    "password": "rachitpass",
+    "role" : "student",
+    "name": "Rachit Rahul mishra",
+    "admissionNo": "17JE003017"
+}
+
