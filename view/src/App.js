@@ -10,7 +10,7 @@ import Login from "./components/Login";
 import Students from "./components/Students";
 import Profile from "./components/Profile";
 import Project from './components/Project';
-import Work from "./components/Work";
+import Work from "./components/work";
 import ProjectForm from "./components/ProjectForm";
 import WorkForm from "./components/WorkForm";
 import AssignForm from "./components/AssignForm";
