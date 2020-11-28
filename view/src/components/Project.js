@@ -38,10 +38,9 @@ class Project extends Component {
     render() {
         const role = this.props.auth.user.role;
         const workList = this.state.works.map((d) => (
-            <li key={d.id}>
+            <li key={d.id} className="list-group-item">
                 <div>
-                    <Link to={`/works/${d.id}`}><h2>{d.name}</h2></Link>
-                    <hr />
+                    <Link to={`/works/${d.id}`}>{d.name}</Link>
                 </div>
             </li>
         ));
@@ -50,8 +49,24 @@ class Project extends Component {
             <div>
                 <h1>{name}</h1>
                 <p>{description}</p>
-                <h2>Work submitted to this project - </h2>
-                <ul>{workList}</ul>
+                <h2
+                    style={{
+                        "text-align": "center",
+                    }}
+                >
+                    List of works
+                </h2>
+                <hr
+                    style={{
+                        padding: "0",
+                        overflow: "visible",
+                        height: "30px",
+                        "border-style": "solid",
+                        "border-color": "black",
+                        "border-width": "1px 0 0 0",
+                    }}
+                />
+                <ul className="list-group">{workList}</ul>
             </div>
         );
     }

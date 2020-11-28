@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from 'react-router';
+import { withRouter } from "react-router";
 import classnames from "classnames";
 import axios from "axios";
 
@@ -27,14 +27,17 @@ class ProjectForm extends Component {
             description: this.state.description,
         };
         axios
-        .post("/api/addProject/" + this.props.match.params.studentId, project)
-        .then((res) => {
-            console.log(res);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-        this.props.history.push('/home');
+            .post(
+                "/api/addProject/" + this.props.match.params.studentId,
+                project
+            )
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        this.props.history.push("/home");
     }
 
     render() {
@@ -57,9 +60,10 @@ class ProjectForm extends Component {
                             value={this.state.name}
                         />
                     </div>
+                    
                     <div className="form-group">
-                        <input
-                            type="string"
+                        <textarea
+                            class="form-control"
                             placeholder="Project description"
                             className={classnames(
                                 "form-control form-control-lg"
@@ -67,7 +71,7 @@ class ProjectForm extends Component {
                             name="description"
                             onChange={this.handleInputChange}
                             value={this.state.description}
-                        />
+                        ></textarea>
                     </div>
                     <div className="form-group">
                         <button type="submit" className="btn btn-primary">

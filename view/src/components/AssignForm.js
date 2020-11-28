@@ -45,8 +45,8 @@ class AssignForm extends Component {
 
     render() {
         const radioItems = this.state.faculties.map((fac) => (
-            <div className="form-check" key={fac.id}>
-                <label>
+            <div className="pretty p-default p-round" key={fac.id}>
+                <label style={{"paddingLeft":"20px"}}>
                     <input
                         type="radio"
                         name="react-tips"
@@ -60,15 +60,24 @@ class AssignForm extends Component {
             </div>
         ));
         return (
-            <div className="container">
-                <form onSubmit={this.handleFormSubmit}>
-                    {radioItems}
-                    <div className="form-group">
-                        <button className="btn btn-primary mt-2" type="submit">
-                            Assign
-                        </button>
-                    </div>
-                </form>
+            <div className="card">
+                <div className="card-header">
+                    <h4>Choose faculty to assign</h4>
+                </div>
+
+                <div className="card-body container">
+                    <form onSubmit={this.handleFormSubmit}>
+                        {radioItems}
+                        <div className="form-group">
+                            <button
+                                className="btn btn-primary mt-2"
+                                type="submit"
+                            >
+                                Assign
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         );
     }

@@ -14,7 +14,7 @@ class Navbar extends Component {
             <div>
                 <nav
                     className="navbar navbar-expand-lg bg-primary"
-                    style={{ "left": "0px" }}
+                    style={{ "left": "0px", "position":"static"}}
                 >
                     <a className="navbar-brand" href="#">
                         Project Allocator

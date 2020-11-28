@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 class Profile extends Component {
@@ -37,12 +37,20 @@ class Profile extends Component {
 
     render() {
         const projectsList = this.state.projects.map((d) => (
-            <li key={d.id}>
-                <Link to={`/projects/${d.id}`}><h2>{d.name}</h2></Link>
-                { this.props.auth.user.role === "student" &&
-                    <Link to={`/works/${d.id}/add`}>Add your work</Link>
-                }
-                <hr/>
+            <li key={d.id} className="list-group-item">
+                <Link to={`/projects/${d.id}`} style={{ "font-size": "2em" }}>
+                    {d.name}
+                </Link>
+                {this.props.auth.user.role === "student" && (
+                    <span style={{ float: "right" }}>
+                        <Link
+                            className="btn btn-info"
+                            to={`/works/${d.id}/add`}
+                        >
+                            Add your work
+                        </Link>
+                    </span>
+                )}
             </li>
         ));
         const { name, admissionNo } = this.state.studentDetails;
@@ -50,10 +58,25 @@ class Profile extends Component {
             <div>
                 <h1>{name}</h1>
                 <h2>admissionNo = {admissionNo}</h2>
-                <p>
-                    <h2>Project List</h2>
-                    <ul>{projectsList}</ul>
-                </p>
+                <h2
+                    style={{
+                        "text-align": "center",
+                    }}
+                >
+                    List of Projects
+                </h2>
+                <hr
+                    style={{
+                        padding: "0",
+                        overflow: "visible",
+                        height: "30px",
+                        margin: "0px 75px 0px 75px",
+                        "border-style": "solid",
+                        "border-color": "black",
+                        "border-width": "1px 0 0 0",
+                    }}
+                />
+                <ul className="list-group" style={{margin:"0px 75px 0px 75px"}}>{projectsList}</ul>
             </div>
         );
     }
@@ -64,4 +87,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Profile);
-

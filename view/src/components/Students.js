@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 class Students extends Component {
     constructor() {
@@ -27,33 +27,63 @@ class Students extends Component {
     render() {
         const role = this.props.auth.user.role;
         const listItems = this.state.students.map((d) => (
-            <li key={d.id}>
-                <div>
-                    <Link to={`/students/${d.id}`}><h2>{d.name}</h2></Link>
-                    {role == "dean" && 
-                        <Link to={`/assign/${d.id}`}>Assign Faculty</Link>
-                    }
-                    {role == "faculty" && 
-                        <Link to={`/projects/${d.id}/add`}>Add Project</Link>
-                    }
-                    <hr/>
+            <div class="card">
+                <div className="card-body">
+                    <Link to={`/students/${d.id}`}>
+                        <span style={{"fontSize":"25px"}}>{d.name}</span>
+                    </Link>
+                    
+                    {role == "dean" && (
+                        <span style={{ float: "right" }}>
+                            <Link
+                                className="btn btn-info"
+                                to={`/assign/${d.id}`}
+                            >
+                                Assign Faculty
+                            </Link>
+                        </span>
+                    )}
+                    {role == "faculty" && (
+                        <span style={{ float: "right" }}>
+                            <Link
+                                className="btn btn-info"
+                                to={`/projects/${d.id}/add`}
+                            >
+                                Add Project
+                            </Link>
+                        </span>
+                    )}
                 </div>
-            </li>
+            </div>
         ));
 
         return (
             <div>
-            <h1>List of Students</h1>
-                <ul>
-                    {listItems}
-                </ul>
+                <h1
+                    style={{
+                        "text-align": "center",
+                    }}
+                >
+                    List of Students
+                </h1>
+                <hr
+                    style={{
+                        padding: "0",
+                        overflow: "visible",
+                        height: "30px",
+                        "border-style": "solid",
+                        "border-color": "black",
+                        "border-width": "1px 0 0 0",
+                    }}
+                />
+                <div>{listItems}</div>
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.auth
-})
+    auth: state.auth,
+});
 
-export  default connect(mapStateToProps)(Students)
+export default connect(mapStateToProps)(Students);
