@@ -6,7 +6,11 @@ class Home extends Component {
     render() {
         var customButton;
         if (!this.props.auth.isAuthenticated) {
-            customButton = <Link to="/login">Log In</Link>;
+            customButton = (
+                <Link className="btn btn-info" to="/login">
+                    Log In
+                </Link>
+            );
         } else {
             switch (this.props.auth.user.role) {
                 case "student": {

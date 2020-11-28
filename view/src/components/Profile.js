@@ -37,28 +37,46 @@ class Profile extends Component {
 
     render() {
         const projectsList = this.state.projects.map((d) => (
-            <li key={d.id} className="list-group-item">
-                <Link to={`/projects/${d.id}`} style={{ "font-size": "2em" }}>
-                    {d.name}
-                </Link>
-                {this.props.auth.user.role === "student" && (
-                    <span style={{ float: "right" }}>
-                        <Link
+            <div key={d.id} className="card">
+                <div className="card-body">
+                    <span style={{ fontSize: "25px" }}>{d.name}</span>
+                    <Link to={`/projects/${d.id}`}>
+                        <span
                             className="btn btn-info"
-                            to={`/works/${d.id}/add`}
+                            style={{ float: "right", marginLeft: "10px" }}
                         >
-                            Add your work
-                        </Link>
-                    </span>
-                )}
-            </li>
+                            See Project Details
+                        </span>
+                    </Link>
+                    {this.props.auth.user.role === "student" && (
+                        <span style={{ float: "right" }}>
+                            <Link
+                                className="btn btn-info"
+                                to={`/works/${d.id}/add`}
+                            >
+                                Add your work
+                            </Link>
+                        </span>
+                    )}
+                </div>
+            </div>
         ));
         const { name, admissionNo } = this.state.studentDetails;
         return (
             <div>
-                <h1>{name}</h1>
-                <h2>admissionNo = {admissionNo}</h2>
-                <h2
+                <div className="card">
+                    <div className="card-header">
+                        Student Details
+                    </div>
+                    <div className="card-body" style={{paddingTop:"0px"}}>
+                        <h1>Name : {name}</h1>
+                        <h2>Admission number : {admissionNo}</h2>
+                    </div>
+                </div>
+                
+                <div className="card">
+                    <div className="card-body">
+                    <h2
                     style={{
                         "text-align": "center",
                     }}
@@ -70,13 +88,14 @@ class Profile extends Component {
                         padding: "0",
                         overflow: "visible",
                         height: "30px",
-                        margin: "0px 75px 0px 75px",
                         "border-style": "solid",
                         "border-color": "black",
                         "border-width": "1px 0 0 0",
                     }}
                 />
-                <ul className="list-group" style={{margin:"0px 75px 0px 75px"}}>{projectsList}</ul>
+                <div>{projectsList}</div>
+                    </div>
+                </div>
             </div>
         );
     }

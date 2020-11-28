@@ -29,7 +29,7 @@ class Work extends Component {
         return (
             <div>
                 <h1>{name}</h1>
-                <div>{description}</div>
+                <p className="lead mt-4">{description}</p>
             </div>
         );
     }

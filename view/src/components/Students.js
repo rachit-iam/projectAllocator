@@ -29,10 +29,10 @@ class Students extends Component {
         const listItems = this.state.students.map((d) => (
             <div class="card">
                 <div className="card-body">
+                    <span style={{"fontSize":"25px"}}>{d.name}</span>
                     <Link to={`/students/${d.id}`}>
-                        <span style={{"fontSize":"25px"}}>{d.name}</span>
+                        <span className="btn btn-info" style={{ float: "right", marginLeft:"10px" }}>Go to Profile</span>
                     </Link>
-                    
                     {role == "dean" && (
                         <span style={{ float: "right" }}>
                             <Link

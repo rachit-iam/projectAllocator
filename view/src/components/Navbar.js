@@ -14,19 +14,22 @@ class Navbar extends Component {
             <div>
                 <nav
                     className="navbar navbar-expand-lg bg-primary"
-                    style={{ "left": "0px", "position":"static"}}
+                    style={{ left: "0px", position: "static" }}
                 >
                     <a className="navbar-brand" href="#">
                         Project Allocator
                     </a>
                     <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav">
+                        <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
                                 <Link className="nav-link" to="/home">
-                                    Home <span className="sr-only">(current)</span>
+                                    Home{" "}
+                                    <span className="sr-only">(current)</span>
                                 </Link>
                             </li>
-                            <li className="nav-item">
+                        </ul>
+                        <span className="navbar-text">
+                            {this.props.auth.isAuthenticated && (
                                 <a
                                     className="nav-link"
                                     href=""
@@ -35,11 +38,11 @@ class Navbar extends Component {
                                 >
                                     Logout
                                 </a>
-                            </li>
-                        </ul>
+                            )}
+                        </span>
                     </div>
                 </nav>
-                <br/>
+                <br />
             </div>
         );
     }
