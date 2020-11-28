@@ -11,9 +11,7 @@ class Home extends Component {
             switch (this.props.auth.user.role) {
                 case "student": {
                     customButton = (
-                        <Link
-                            to={`/students/${localStorage.studentId}`}
-                        >
+                        <Link to={`/students/${localStorage.studentId}`}>
                             See you profile
                         </Link>
                     );
@@ -34,7 +32,7 @@ class Home extends Component {
                 }
             }
         }
-        return <div>{customButton}</div>;
+        return (<div>{customButton}</div>);
     }
 }
 

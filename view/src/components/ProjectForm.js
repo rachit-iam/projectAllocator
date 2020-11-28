@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from 'react-router';
 import classnames from "classnames";
 import axios from "axios";
 
@@ -33,7 +34,7 @@ class ProjectForm extends Component {
         .catch((err) => {
             console.log(err);
         });
-
+        this.props.history.push('/home');
     }
 
     render() {
@@ -79,4 +80,4 @@ class ProjectForm extends Component {
     }
 }
 
-export default ProjectForm;
+export default withRouter(ProjectForm);

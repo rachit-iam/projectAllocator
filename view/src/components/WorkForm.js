@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import classnames from "classnames";
 import axios from "axios";
 
@@ -26,14 +27,14 @@ class WorkForm extends Component {
             description: this.state.description,
         };
         axios
-        .post("/api/addWork/" + this.props.match.params.projectId, work)
-        .then((res) => {
-            console.log(res);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-
+            .post("/api/addWork/" + this.props.match.params.projectId, work)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        this.props.history.push("/home");
     }
 
     render() {
@@ -79,4 +80,4 @@ class WorkForm extends Component {
     }
 }
 
-export default WorkForm;
+export default withRouter(WorkForm);

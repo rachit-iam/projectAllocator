@@ -9,13 +9,13 @@ import axios from "axios";
 import Login from "./components/Login";
 import Students from "./components/Students";
 import Profile from "./components/Profile";
-import Project from './components/Project';
+import Project from "./components/Project";
 import Work from "./components/work";
 import ProjectForm from "./components/ProjectForm";
 import WorkForm from "./components/WorkForm";
 import AssignForm from "./components/AssignForm";
 import Home from "./components/Home";
-import Navbar from './components/Navbar';
+import Navbar from "./components/Navbar";
 
 axios.defaults.baseURL = "http://localhost:8000";
 
@@ -41,11 +41,7 @@ class App extends Component {
                         {/* <Route exact path="/" component={Home} /> */}
                         <div className="container">
                             <Route exact path="/login" component={Login} />
-                            <Route
-                                exact
-                                path="/home"
-                                component={Home}
-                            />
+                            <Route exact path="/home" component={Home} />
                             <Route
                                 exact
                                 path="/students"
@@ -61,11 +57,7 @@ class App extends Component {
                                 path="/projects/:id"
                                 component={Project}
                             />
-                            <Route
-                                exact
-                                path="/works/:id"
-                                component={Work}
-                            />
+                            <Route exact path="/works/:id" component={Work} />
                             <Route
                                 exact
                                 path="/projects/:studentId/add"
@@ -81,6 +73,7 @@ class App extends Component {
                                 path="/assign/:studentId"
                                 component={AssignForm}
                             />
+                            <Route exact path="/" component={Home} />
                         </div>
                     </div>
                 </Router>
