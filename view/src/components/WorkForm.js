@@ -58,8 +58,8 @@ class WorkForm extends Component {
                         />
                     </div>
                     <div className="form-group">
-                        <input
-                            type="string"
+                        <textarea
+                            class="form-control"
                             placeholder="Work description"
                             className={classnames(
                                 "form-control form-control-lg"
@@ -67,7 +67,7 @@ class WorkForm extends Component {
                             name="description"
                             onChange={this.handleInputChange}
                             value={this.state.description}
-                        />
+                        ></textarea>
                     </div>
                     <div className="form-group">
                         <button type="submit" className="btn btn-primary">

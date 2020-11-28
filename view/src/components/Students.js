@@ -33,7 +33,7 @@ class Students extends Component {
                     <Link to={`/students/${d.id}`}>
                         <span className="btn btn-info" style={{ float: "right", marginLeft:"10px" }}>Go to Profile</span>
                     </Link>
-                    {role == "dean" && (
+                    {role == "dean" && (!d.facultyId) &&  (
                         <span style={{ float: "right" }}>
                             <Link
                                 className="btn btn-info"
